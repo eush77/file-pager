@@ -1,7 +1,8 @@
 'use strict';
 
 var rimraf = require('rimraf'),
-    through = require('through2');
+    through = require('through2'),
+    tmpFilePath = require('gettemporaryfilepath');
 
 var spawn = require('child_process').spawn,
     path = require('path'),
@@ -94,8 +95,3 @@ tmpFileFrom['ext'] = function (ext, cb) {
     }
   });
 };
-
-
-function tmpFilePath () {
-  return path.join(os.tmpdir(), String(Date.now()));
-}

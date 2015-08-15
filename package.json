@@ -34,6 +34,7 @@
     "create"
   ],
   "dependencies": {
+    "gettemporaryfilepath": "0.0.1",
     "rimraf": "^2.4.2",
     "through2": "^2.0.0"
   },

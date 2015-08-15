@@ -99,14 +99,14 @@ test('opts.ext', function (t) {
   t.captureTmpDir();
 
   process.env.PAGER = 'true';
-  var spawnCount = 0;
+  var time = 0;
 
   var spawn = spawnCtrl()
         .on('spawn', function (cmd) {
           t.equal(cmd[0], 'true');
           t.equal(path.extname(cmd[1]), '.js');
           t.equal(fs.readFileSync(cmd[1], 'utf8'), 'data');
-          spawnCount += 1;
+          time += 1;
         });
 
   pager.__set__('spawn', spawn);
@@ -115,7 +115,7 @@ test('opts.ext', function (t) {
 
   function done (err) {
     t.ifErr(err);
-    if (spawnCount == 2) {
+    if (++time == 4) {
       t.tmpDirNotChanged();
     }
   }
