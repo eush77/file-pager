@@ -76,9 +76,7 @@ tmpFileFrom['basename'] = function (basename, cb) {
     if (err) return cb(err);
     cb(null, {
       path: path.join(tmpdir, basename),
-      delete: function (cb) {
-        rimraf(this.path, cb);
-      }
+      delete: rimraf.bind(null, tmpdir)
     });
   });
 };

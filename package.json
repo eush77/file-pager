@@ -37,5 +37,9 @@
     "rimraf": "^2.4.2",
     "through2": "^2.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "object.assign": "^3.0.1",
+    "rewire": "^2.3.4",
+    "tape": "^4.2.0"
+  }
 }
