@@ -11,7 +11,8 @@ var test = require('tape'),
 var fs = require('fs'),
     os = require('os'),
     path = require('path'),
-    events = require('events');
+    events = require('events'),
+    childProcess = require('child_process');
 
 
 Test.prototype.captureTmpDir = function () {
@@ -21,13 +22,6 @@ Test.prototype.captureTmpDir = function () {
 Test.prototype.tmpDirNotChanged = function () {
   this.deepEqual(fs.readdirSync(os.tmpdir()), this.tmpDir);
 };
-
-
-test('opts', function (t) {
-  t.throws(pager.bind(null, { path: '/path/to/file', ext: 'js' }), /exclusive/);
-  t.throws(pager.bind(null, { basename: 'file.js', ext: 'cc' }), /exclusive/);
-  t.end();
-});
 
 
 test('opts.path', function (t) {
@@ -118,5 +112,32 @@ test('opts.ext', function (t) {
     if (++time == 4) {
       t.tmpDirNotChanged();
     }
+  }
+});
+
+
+test('errors', function (t) {
+  t.throws(pager.bind(null, { path: '/path/to/file', ext: 'js' }), /exclusive/);
+  t.throws(pager.bind(null, { basename: 'file.js', ext: 'cc' }), /exclusive/);
+
+  process.env.PAGER = 'false';
+  t.captureTmpDir();
+  pager.__set__('spawn', childProcess.spawn);
+  pager({ ext: 'js' }, next).end('data');
+
+  function next (err) {
+    t.ok(/code/.test(err.message));
+    t.tmpDirNotChanged();
+
+    var signaller = spawnCtrl(null, 'SIGKILL');
+    signaller.once('spawn', Function.prototype);
+    pager.__set__('spawn', signaller);
+    pager({ ext: 'js' }, done).end('data');
+  }
+
+  function done (err) {
+    t.ok(/SIGKILL/.test(err.message));
+    t.tmpDirNotChanged();
+    t.end();
   }
 });
