@@ -1,0 +1,41 @@
+{
+  "name": "file-pager",
+  "version": "0.0.0",
+  "description": "Pipe to $PAGER by creating a temporary file first",
+  "author": "Eugene Sharygin <eush77@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "example": "node example/example.js",
+    "test": "tape test/*.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/eush77/file-pager",
+  "repository": "eush77/file-pager",
+  "bugs": {
+    "url": "https://github.com/eush77/file-pager/issues"
+  },
+  "keywords": [
+    "text",
+    "pager",
+    "shell",
+    "less",
+    "more",
+    "file",
+    "temporary",
+    "tmp",
+    "filename",
+    "lessopen",
+    "extension",
+    "path",
+    "stream",
+    "pipe",
+    "create"
+  ],
+  "dependencies": {
+    "rimraf": "^2.4.2",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {}
+}
