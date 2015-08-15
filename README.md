@@ -22,9 +22,9 @@ var pager = require('file-pager');
 var fs = require('fs');
 
 fs.createReadStream(require.resolve('file-pager'))
-  .pipe(pager({ ext: 'js' }), function () {
+  .pipe(pager({ ext: 'js' }, function () {
     console.log('Done.');
-  });
+  }));
 ```
 
 `npm run example` to open source file for this module with syntax highlighting (if your pager supports it and is configured correctly).
